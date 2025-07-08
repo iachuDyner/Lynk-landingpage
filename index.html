@@ -48,6 +48,14 @@
       margin-right: 2vw;
       flex-shrink: 0;
     }
+    .logo-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      display: block;
+      background: transparent;
+    }
     .header-center {
       flex: 1;
       display: flex;
@@ -747,68 +755,97 @@
       max-width: 1400px;
       margin: 0 auto 5rem auto;
       padding: 5rem 2vw 4rem 2vw;
-      border-radius: 40px;
-      background: linear-gradient(120deg, #f5e6fa 60%, var(--violeta-claro) 100%);
-      box-shadow: 0 8px 40px rgba(100,38,132,0.13);
+     
+      
       opacity: 0;
       transform: translateY(80px) scale(0.98);
       will-change: opacity, transform;
-      border: 3px solid var(--violeta-claro);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    .app-examples-section.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    .app-examples-section {
+      position: relative;
+      min-height: 90vh;
+      width: 100vw;
+      opacity: 1 !important;
+      display: block !important;
+      transition: none !important;
     }
     .app-examples-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3.5rem;
-      justify-content: center;
-      align-items: flex-start;
-      margin-top: 3rem;
-      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-70%, -50%);
+      width: 1100px;
+      max-width: 98vw;
+      height: 700px;
+      pointer-events: none;
+      display: block !important;
+      opacity: 1 !important;
+      transition: none !important;
     }
     .app-example-card {
-      background: var(--blanco);
-      border-radius: 32px;
-      box-shadow: 0 8px 32px rgba(159,75,151,0.13);
-      padding: 2.5rem 2rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 900px;
+      border-radius: 40px;
+      box-shadow: none;
+      background: transparent !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 320px;
-      max-width: 420px;
-      min-height: 600px;
-      transition: box-shadow 0.3s, transform 0.5s cubic-bezier(.4,2,.2,1);
+      transition: none;
+      cursor: default;
+      overflow: hidden;
+      z-index: 1;
+      opacity: 1;
+      pointer-events: none;
     }
-    .app-example-card:hover {
-      box-shadow: 0 16px 64px rgba(159,75,151,0.22);
-      transform: scale(1.04) translateY(-8px);
-      z-index: 2;
+    .app-example-card:nth-child(1) {
+      transform: translate(-480px, -50%) rotate(-24deg) scale(0.98);
+    }
+    .app-example-card:nth-child(2) {
+      transform: translate(-240px, -50%) rotate(-12deg) scale(0.99);
+    }
+    .app-example-card:nth-child(3) {
+      transform: translate(0, -50%) rotate(0deg) scale(1);
+    }
+    .app-example-card:nth-child(4) {
+      transform: translate(240px, -50%) rotate(12deg) scale(0.99);
+    }
+    .app-example-card:nth-child(5) {
+      transform: translate(480px, -50%) rotate(24deg) scale(0.98);
     }
     .app-example-img {
       width: 100%;
-      max-width: 340px;
-      max-height: 600px;
-      border-radius: 24px;
-      box-shadow: 0 4px 24px rgba(100,38,132,0.10);
-      object-fit: cover;
-      background: #fff;
-      transition: box-shadow 0.3s, filter 0.3s;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 40px;
+      background: transparent !important;
+      box-shadow: none;
+      display: block;
     }
-    .app-example-card:hover .app-example-img {
-      box-shadow: 0 12px 40px rgba(159,75,151,0.18);
-      filter: brightness(0.95) blur(1px);
-    }
-    @media (max-width: 1100px) {
-      .app-examples-gallery { flex-direction: column; gap: 2rem; align-items: center; }
-      .app-example-card { min-width: 90vw; max-width: 98vw; min-height: 400px; }
-      .app-example-img { max-width: 90vw; max-height: 400px; }
+    @media (max-width: 1200px) {
+      .app-examples-gallery {
+        width: 98vw;
+        height: 340px;
+        min-height: 0;
+      }
+      .app-example-card {
+        width: 180px;
+        height: 260px;
+        border-radius: 14px;
+      }
+      .app-example-card:nth-child(1) { transform: translate(-140px, -50%) rotate(-24deg) scale(0.98); }
+      .app-example-card:nth-child(2) { transform: translate(-70px, -50%) rotate(-12deg) scale(0.99); }
+      .app-example-card:nth-child(3) { transform: translate(0, -50%) rotate(0deg) scale(1); }
+      .app-example-card:nth-child(4) { transform: translate(70px, -50%) rotate(12deg) scale(0.99); }
+      .app-example-card:nth-child(5) { transform: translate(140px, -50%) rotate(24deg) scale(0.98); }
+      .app-example-img { border-radius: 8px; }
     }
     /* Fondos únicos para cada sección */
     .hero {
@@ -918,111 +955,92 @@
     }
     /* NUEVO: Cards grandes y carrusel para '¿Por qué usar Lynk?' */
     .why-lynk-section {
-      background: linear-gradient(120deg, #4a235a 60%, #9F4B97 100%);
-      color: #fff;
-      border-radius: 32px;
-      box-shadow: 0 8px 40px rgba(100,38,132,0.13);
-      max-width: 1400px;
+      background: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
       margin: 0 auto 5rem auto;
       padding: 5rem 2vw 5rem 2vw;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      max-width: 1400px;
       position: relative;
     }
     .why-lynk-title {
       font-size: 2.8rem;
       font-weight: 900;
       margin-bottom: 2.5rem;
-      text-align: left;
+      text-align: center;
       width: 100%;
-      max-width: 1100px;
+      color: var(--violeta-oscuro);
     }
-    .why-lynk-carousel {
-      width: 100%;
-      max-width: 1100px;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      gap: 2.5rem;
-      position: relative;
-    }
-    .why-lynk-card {
-      background: #5e2d7c;
-      border-radius: 24px;
-      box-shadow: 0 4px 24px rgba(100,38,132,0.18);
+    .why-lynk-carousel-scroll {
       display: flex;
       flex-direction: row;
-      align-items: center;
-      min-width: 0;
-      width: 100%;
-      max-width: 520px;
-      min-height: 320px;
-      padding: 2.5rem 2rem;
-      gap: 2rem;
-      opacity: 0;
-      transform: scale(0.95) translateY(40px);
-      transition: opacity 0.5s, transform 0.5s;
-      position: absolute;
-      left: 0; right: 0;
-      margin: auto;
-      z-index: 1;
+      gap: 3rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      width: 100vw;
+      max-width: 1200px;
+      padding-bottom: 2rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--violeta-claro) #eee;
+      background: none;
+      animation: fadeIn 1.2s;
     }
-    .why-lynk-card.active {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      z-index: 2;
-      position: relative;
-    }
-    .why-lynk-card-img {
-      width: 120px;
-      height: 120px;
-      object-fit: contain;
-      border-radius: 18px;
+    .why-lynk-card-scroll {
+      min-width: 340px;
+      max-width: 400px;
       background: #fff;
-      box-shadow: 0 2px 12px rgba(100,38,132,0.10);
-      flex-shrink: 0;
-    }
-    .why-lynk-card-content {
-      flex: 1;
+      border-radius: 32px;
+      box-shadow: 0 8px 32px rgba(100,38,132,0.10);
+      padding: 2.5rem 2rem;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-    }
-    .why-lynk-card-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-bottom: 0.7rem;
-    }
-    .why-lynk-card-desc {
-      font-size: 1.08rem;
-      color: #e0d6ea;
-    }
-    .why-lynk-carousel-controls {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2.5rem;
-      justify-content: center;
-    }
-    .why-lynk-carousel-btn {
-      background: #fff;
-      color: #642684;
-      border: none;
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(100,38,132,0.10);
-      transition: background 0.2s, color 0.2s;
-      display: flex;
       align-items: center;
       justify-content: center;
+      scroll-snap-align: center;
+      transition: transform 0.5s cubic-bezier(.4,2,.2,1), box-shadow 0.3s;
+      opacity: 0.95;
+      margin-bottom: 1rem;
+      position: relative;
+      animation: slideInCard 1s cubic-bezier(.4,2,.2,1);
     }
-    .why-lynk-carousel-btn:hover {
-      background: #9F4B97;
-      color: #fff;
+    .why-lynk-card-scroll:target, .why-lynk-card-scroll:focus-within {
+      transform: scale(1.06) rotate(-2deg);
+      box-shadow: 0 16px 64px rgba(159,75,151,0.22);
+      opacity: 1;
+    }
+    .why-lynk-card-img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 24px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 24px rgba(100,38,132,0.10);
+      object-fit: cover;
+      animation: fadeIn 1.2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInCard {
+      from { opacity: 0; transform: translateX(80px) scale(0.9); }
+      to { opacity: 0.95; transform: translateX(0) scale(1); }
+    }
+    @media (max-width: 900px) {
+      .why-lynk-carousel-scroll {
+        gap: 1.2rem;
+        max-width: 98vw;
+      }
+      .why-lynk-card-scroll {
+        min-width: 90vw;
+        max-width: 98vw;
+        padding: 1.5rem 1rem;
+      }
     }
     /* NUEVO: Bloques destacados para 'Cómo funciona' y 'Sobre Lynk' */
     .highlight-section {
@@ -1074,11 +1092,24 @@
       .highlight-section, .highlight-section.reverse { flex-direction: column; gap: 2rem; padding: 2.5rem 1vw; }
       .highlight-img { width: 100%; max-width: 90vw; }
     }
+    .why-lynk-section.scroll-lock-section {
+      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .why-lynk-carousel-scroll {
+      height: 100%;
+      align-items: center;
+    }
+    body.scroll-locked {
+      overflow: hidden !important;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo-placeholder">L</div>
+    <div class="logo-placeholder"><img src="assets/img/logo-cuadrado.jpg" alt=""></div>
     <div class="header-center">
       <nav>
         <a href="#features">Características</a>
@@ -1158,41 +1189,37 @@
         </div>
       </div>
     </section>
-    <section id="features" class="why-lynk-section">
+    <section id="features" class="why-lynk-section scroll-lock-section">
       <div class="why-lynk-title">¿Por qué usar Lynk?</div>
-      <div class="why-lynk-carousel">
-        <div class="why-lynk-card active" id="why-card-0">
+      <div class="why-lynk-carousel-scroll">
+        <div class="why-lynk-card-scroll">
           <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Organización fácil">
           <div class="why-lynk-card-content">
             <div class="why-lynk-card-title">Organización fácil y rápida</div>
             <div class="why-lynk-card-desc">Crea eventos, invita amigos y asigna tareas en segundos. Todo desde una sola app.</div>
           </div>
         </div>
-        <div class="why-lynk-card" id="why-card-1">
+        <div class="why-lynk-card-scroll">
           <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Confirmaciones en tiempo real">
           <div class="why-lynk-card-content">
             <div class="why-lynk-card-title">Confirmaciones en tiempo real</div>
             <div class="why-lynk-card-desc">Sigue quién viene, quién trae qué y recibe notificaciones instantáneas de cambios.</div>
           </div>
         </div>
-        <div class="why-lynk-card" id="why-card-2">
+        <div class="why-lynk-card-scroll">
           <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Colaboración eficiente">
           <div class="why-lynk-card-content">
             <div class="why-lynk-card-title">Colaboración eficiente</div>
             <div class="why-lynk-card-desc">Asigna roles, realiza encuestas rápidas y visualiza el estado de cada participante.</div>
           </div>
         </div>
-        <div class="why-lynk-card" id="why-card-3">
+        <div class="why-lynk-card-scroll">
           <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Historial y estadísticas">
           <div class="why-lynk-card-content">
             <div class="why-lynk-card-title">Historial y estadísticas</div>
             <div class="why-lynk-card-desc">Consulta tu historial de eventos y accede a estadísticas personalizadas.</div>
           </div>
         </div>
-      </div>
-      <div class="why-lynk-carousel-controls">
-        <button class="why-lynk-carousel-btn" onclick="showWhyCard(-1)">&lt;</button>
-        <button class="why-lynk-carousel-btn" onclick="showWhyCard(1)">&gt;</button>
       </div>
     </section>
     <section id="how" class="highlight-section">
@@ -1203,23 +1230,29 @@
       <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=600&q=80" class="highlight-img" alt="Cómo funciona Lynk">
     </section>
     <section id="about" class="highlight-section reverse">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="highlight-img" alt="Sobre Lynk">
+      <img src="https://www.ciudaris.com/wp-content/uploads/amigos-planes-para-semana-santa.jpg" class="highlight-img" alt="Sobre Lynk">
       <div class="highlight-content">
         <div class="highlight-title">Sobre Lynk</div>
         <div class="highlight-desc">Lynk nació como una idea entre amigos, motivados por las dificultades al organizar actividades. Con Lynk, puedes visualizar fácilmente quién viene, qué trae cada uno y a qué hora se sale. Nuestra app permite crear eventos, invitar participantes, asignar tareas y mucho más. Incluye confirmaciones en tiempo real, encuestas, recordatorios y un calendario sincronizado. Lynk es la solución para cualquier grupo que quiera organizarse mejor, de forma simple, clara y efectiva.</div>
       </div>
     </section>
     <section id="app-examples" class="app-examples-section">
-      <div class="section-title"><span class="section-title-bg">Ejemplos de la aplicación</span></div>
       <div class="app-examples-gallery">
+        <!-- Adelantos agregados -->
         <div class="app-example-card">
-          <img src="assets/app-examples/ejemplo-galeria.png" alt="Ejemplo galería de eventos" class="app-example-img">
+          <img src="assets/img/signup.png" alt="Adelanto registro" class="app-example-img">
         </div>
         <div class="app-example-card">
-          <img src="assets/app-examples/ejemplo-calendario.png" alt="Ejemplo calendario" class="app-example-img">
+          <img src="assets/img/calendario.png" alt="Adelanto calendario" class="app-example-img">
         </div>
         <div class="app-example-card">
-          <img src="assets/app-examples/ejemplo-inicio.png" alt="Ejemplo pantalla de inicio" class="app-example-img">
+          <img src="assets/img/captura-galeria.png" alt="Adelanto galería" class="app-example-img">
+        </div>
+        <div class="app-example-card">
+          <img src="assets/img/exitosa.png" alt="Adelanto exitosa" class="app-example-img">
+        </div>
+        <div class="app-example-card">
+          <img src="assets/img/tickets.png" alt="Adelanto tickets" class="app-example-img">
         </div>
       </div>
     </section>
@@ -1343,6 +1376,62 @@
     }
     // Inicializar carrusel
     whyCards[0].classList.add('active');
+
+    // Tarjetas apiladas tipo billetera
+    const cards = document.querySelectorAll('.app-example-card');
+    let activeIdx = 2; // Por defecto la última es la activa
+    function setActiveCard(idx) {
+      cards.forEach((card, i) => {
+        card.classList.toggle('active', i === idx);
+      });
+      activeIdx = idx;
+    }
+    cards.forEach((card, i) => {
+      card.addEventListener('click', () => setActiveCard(i));
+    });
+    setActiveCard(activeIdx);
+
+    (function() {
+      const section = document.querySelector('.scroll-lock-section');
+      const carousel = section.querySelector('.why-lynk-carousel-scroll');
+      let isLocked = false;
+      let lastScrollY = window.scrollY;
+
+      function lockScroll() {
+        document.body.classList.add('scroll-locked');
+        isLocked = true;
+      }
+      function unlockScroll() {
+        document.body.classList.remove('scroll-locked');
+        isLocked = false;
+      }
+
+      function handleScroll(e) {
+        const rect = section.getBoundingClientRect();
+        const inView = rect.top <= 0 && rect.bottom > window.innerHeight/2;
+        if (inView && !isLocked) {
+          lockScroll();
+        } else if (!inView && isLocked) {
+          unlockScroll();
+        }
+      }
+
+      window.addEventListener('scroll', handleScroll);
+
+      // Scroll vertical -> horizontal en el carrusel
+      section.addEventListener('wheel', function(e) {
+        if (!isLocked) return;
+        e.preventDefault();
+        carousel.scrollLeft += e.deltaY;
+        // Si llegó al final, desbloquear scroll
+        if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth - 2) {
+          unlockScroll();
+        }
+      }, { passive: false });
+
+      // Al cargar, si la sección está en pantalla, bloquear scroll
+      window.addEventListener('DOMContentLoaded', handleScroll);
+    })();
   </script>
 </body>
 </html> 
