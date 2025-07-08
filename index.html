@@ -1341,7 +1341,7 @@
     }
     .premium-section {
       position: relative;
-      background: #181818;
+      background: #19191b;
       padding: 7rem 0 8rem 0;
       overflow-x: hidden;
       position: relative;
@@ -1444,9 +1444,8 @@
       }
     }
     .testimonials-section {
-      background: #19191b;
       padding: 7rem 0 7rem 0;
-      min-height: 500px;
+      min-height: 600px;
     }
     .testimonials-title {
       text-align: center;
@@ -1456,86 +1455,171 @@
       margin-bottom: 4rem;
       letter-spacing: -1px;
     }
-    .testimonials-real-row {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 3.5rem;
-      flex-wrap: wrap;
-    }
-    .testimonial-real {
+    .testimonials-chat-row {
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: 420px;
-      min-width: 320px;
-      flex: 1 1 320px;
+      gap: 3.5rem;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .testimonial-chat {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      width: 100%;
+      max-width: 900px;
+      min-height: 220px;
       opacity: 0;
-      transform: translateY(60px) scale(0.98);
+      transform: translateX(0) scale(0.98);
       filter: blur(8px);
-      transition: opacity 0.8s cubic-bezier(.4,2,.2,1), transform 0.8s cubic-bezier(.4,2,.2,1), filter 0.8s cubic-bezier(.4,2,.2,1);
+      transition: opacity 0.9s cubic-bezier(.4,2,.2,1), transform 0.9s cubic-bezier(.4,2,.2,1), filter 0.9s cubic-bezier(.4,2,.2,1);
     }
-    .testimonial-real.visible {
+    .testimonial-chat[data-side="left"] {
+      justify-content: flex-start;
+    }
+    .testimonial-chat[data-side="right"] {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+    .testimonial-chat.visible[data-side="left"] {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateX(0) scale(1);
       filter: blur(0);
+      animation: chat-in-left 0.9s cubic-bezier(.4,2,.2,1);
     }
-    .testimonial-avatar {
-      width: 96px;
-      height: 96px;
+    .testimonial-chat.visible[data-side="right"] {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      filter: blur(0);
+      animation: chat-in-right 0.9s cubic-bezier(.4,2,.2,1);
+    }
+    @keyframes chat-in-left {
+      0% { opacity: 0; transform: translateX(-120px) scale(0.98); filter: blur(8px); }
+      100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+    }
+    @keyframes chat-in-right {
+      0% { opacity: 0; transform: translateX(120px) scale(0.98); filter: blur(8px); }
+      100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+    }
+    .testimonial-avatar-chat {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       overflow: hidden;
-      margin-bottom: 1.5rem;
-      border: 4px solid #ffd70044;
+      margin: 0 2rem 0 0;
+      border: 5px solid #ffd70044;
       box-shadow: 0 2px 16px #0006;
+      flex-shrink: 0;
+      background: #232323;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .testimonial-avatar img {
+    .testimonial-chat[data-side="right"] .testimonial-avatar-chat {
+      margin: 0 0 0 2rem;
+    }
+    .testimonial-avatar-chat img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-    .testimonial-bubble {
+    .testimonial-bubble-chat {
       background: #232323;
       border-radius: 32px 32px 32px 8px;
-      padding: 2.5rem 2rem 2rem 2rem;
+      padding: 2.8rem 2.5rem 2.2rem 2.5rem;
       box-shadow: 0 8px 40px #000a, 0 0 0 1.5px #ffd70022;
-      margin-bottom: 1.2rem;
+      min-width: 0;
+      width: 100%;
+      max-width: 650px;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .testimonial-quote-real {
-      font-size: 1.35rem;
+    .testimonial-chat[data-side="right"] .testimonial-bubble-chat {
+      border-radius: 32px 32px 8px 32px;
+    }
+    .testimonial-bubble-chat:before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 48px;
+      width: 0; height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-right: 24px solid #232323;
+      filter: drop-shadow(-2px 2px 2px #0008);
+    }
+    .testimonial-chat[data-side="right"] .testimonial-bubble-chat:before {
+      left: auto;
+      right: -24px;
+      border-right: none;
+      border-left: 24px solid #232323;
+      filter: drop-shadow(2px 2px 2px #0008);
+    }
+    .testimonial-quote-chat {
+      font-size: 1.7rem;
       color: #fff;
       line-height: 1.7;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
       font-weight: 500;
+      position: relative;
     }
-    .testimonial-user-real {
-      font-size: 1.1rem;
+    .testimonial-quote-chat:before {
+      content: '“';
+      font-size: 2.5rem;
+      color: #ffd700;
+      position: absolute;
+      left: -1.2rem;
+      top: -1.2rem;
+      font-family: serif;
+    }
+    .testimonial-quote-chat:after {
+      content: '”';
+      font-size: 2.5rem;
+      color: #ffd700;
+      position: absolute;
+      right: -1.2rem;
+      bottom: -1.2rem;
+      font-family: serif;
+    }
+    .testimonial-user-chat {
+      font-size: 1.2rem;
       color: #ffd700;
       font-weight: 700;
       text-align: right;
     }
-    @media (max-width: 1100px) {
-      .testimonials-real-row {
-        gap: 1.5rem;
+    @media (max-width: 1200px) {
+      .testimonials-chat-row {
+        max-width: 98vw;
       }
-      .testimonial-real {
-        max-width: 95vw;
+      .testimonial-chat {
+        max-width: 98vw;
+      }
+      .testimonial-bubble-chat {
+        max-width: 98vw;
       }
     }
     @media (max-width: 700px) {
       .testimonials-title {
         font-size: 1.5rem;
       }
-      .testimonials-real-row {
-        flex-direction: column;
-        align-items: center;
+      .testimonial-avatar-chat {
+        width: 70px;
+        height: 70px;
+        margin: 0 1rem 0 0;
       }
-      .testimonial-real {
-        min-width: 0;
-        width: 95vw;
+      .testimonial-chat[data-side="right"] .testimonial-avatar-chat {
+        margin: 0 0 0 1rem;
+      }
+      .testimonial-bubble-chat {
+        padding: 1.5rem 1rem 1.2rem 1rem;
+      }
+      .testimonial-quote-chat {
+        font-size: 1.1rem;
       }
     }
     <section id="testimonials" class="testimonials-section">
@@ -1566,7 +1650,6 @@
     </section>
     <style>
       .testimonials-section {
-        background: #19191b;
         padding: 7rem 0 7rem 0;
         min-height: 600px;
       }
@@ -2041,6 +2124,32 @@
         </div>
       </div>
     </section>
+    <section id="testimonials" class="testimonials-section">
+      <h2 class="testimonials-title">Testimonios reales de usuarios</h2>
+      <div class="testimonials-chat-row">
+        <div class="testimonial-chat" data-animate data-side="left">
+          <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Juan, 28" /></div>
+          <div class="testimonial-bubble-chat">
+            <div class="testimonial-quote-chat">“Pensé que organizar el viaje iba a ser un caos, pero con Lynk fue como tener un grupo de WhatsApp... ¡pero ordenado! Hasta mi amigo Nico llegó a tiempo.”</div>
+            <div class="testimonial-user-chat">Juan, 28 años</div>
+          </div>
+        </div>
+        <div class="testimonial-chat" data-animate data-side="right">
+          <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana, 34" /></div>
+          <div class="testimonial-bubble-chat">
+            <div class="testimonial-quote-chat">“Me encantó que pude votar por la fecha y ver todo el plan sin perderme entre mil mensajes. ¡Y los recordatorios me salvaron!”</div>
+            <div class="testimonial-user-chat">Ana, 34 años</div>
+          </div>
+        </div>
+        <div class="testimonial-chat" data-animate data-side="left">
+          <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Lucas, 22" /></div>
+          <div class="testimonial-bubble-chat">
+            <div class="testimonial-quote-chat">“Al principio dudé, pero ahora uso Lynk para todos los asados. Es mucho más fácil que andar preguntando quién trae qué.”</div>
+            <div class="testimonial-user-chat">Lucas, 22 años</div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="premium" class="premium-section">
       <div class="premium-title">Funciones <span class="gold">Premium</span></div>
       <div class="premium-features-row alot">
@@ -2069,7 +2178,7 @@
     </section>
     <style>
       .premium-section {
-        background: #181818;
+        background: #19191b;
         padding: 7rem 0 8rem 0;
         overflow-x: hidden;
         position: relative;
@@ -2190,35 +2299,9 @@
         document.addEventListener('DOMContentLoaded', revealPremiumCards);
       })();
     </script>
-    <section id="testimonials" class="testimonials-section">
-      <h2 class="testimonials-title">Testimonios reales de usuarios</h2>
-      <div class="testimonials-chat-row">
-        <div class="testimonial-chat" data-animate data-side="left">
-          <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Juan, 28" /></div>
-          <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Pensé que organizar el viaje iba a ser un caos, pero con Lynk fue como tener un grupo de WhatsApp... ¡pero ordenado! Hasta mi amigo Nico llegó a tiempo.”</div>
-            <div class="testimonial-user-chat">Juan, 28 años</div>
-          </div>
-        </div>
-        <div class="testimonial-chat" data-animate data-side="right">
-          <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana, 34" /></div>
-          <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Me encantó que pude votar por la fecha y ver todo el plan sin perderme entre mil mensajes. ¡Y los recordatorios me salvaron!”</div>
-            <div class="testimonial-user-chat">Ana, 34 años</div>
-          </div>
-        </div>
-        <div class="testimonial-chat" data-animate data-side="left">
-          <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Lucas, 22" /></div>
-          <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Al principio dudé, pero ahora uso Lynk para todos los asados. Es mucho más fácil que andar preguntando quién trae qué.”</div>
-            <div class="testimonial-user-chat">Lucas, 22 años</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    
     <style>
       .testimonials-section {
-        background: #19191b;
         padding: 7rem 0 7rem 0;
         min-height: 600px;
       }
