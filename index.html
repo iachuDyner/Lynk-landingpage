@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lynk - Organiza tus eventos fácil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --violeta-oscuro: #642684;
+      --violeta-claro: #9F4B97;
+      --blanco: #fff;
+      --gris: #f5f5f5;
+      --sombra: 0 4px 24px rgba(100,38,132,0.08);
+      --glass-bg: rgba(255,255,255,0.7);
+      --glass-blur: blur(12px);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--blanco);
+      color: var(--violeta-oscuro);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1.5rem 5vw 1.5rem 5vw;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      box-shadow: 0 2px 16px rgba(100,38,132,0.08);
+      transition: box-shadow 0.3s, background 0.3s;
+    }
+    .logo-placeholder {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--violeta-oscuro), var(--violeta-claro));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blanco); font-size: 1.5rem; font-weight: bold;
+      letter-spacing: 2px;
+      box-shadow: var(--sombra);
+      animation: float 2.5s ease-in-out infinite alternate;
+      margin-right: 2vw;
+      flex-shrink: 0;
+    }
+    .header-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+    nav a {
+      color: var(--violeta-oscuro);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.2s, transform 0.2s;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--violeta-oscuro), var(--violeta-claro));
+      transition: width 0.3s;
+      position: absolute;
+      left: 0; bottom: -4px;
+    }
+    nav a:hover {
+      color: var(--violeta-claro);
+      transform: translateY(-2px) scale(1.05);
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+      text-align: center;
+      background: linear-gradient(120deg, var(--blanco) 60%, var(--violeta-claro) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--violeta-oscuro);
+      letter-spacing: -1px;
+      animation: fadeInDown 1s;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      color: #4a235a;
+      margin-bottom: 2rem;
+      animation: fadeInUp 1.2s;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .cta-btn {
+      background: linear-gradient(90deg, var(--violeta-oscuro), var(--violeta-claro));
+      color: var(--blanco);
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 32px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeInUp 1.4s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 8px 32px rgba(159,75,151,0.12);
+    }
+    .hero-img {
+      width: 340px;
+      margin-top: 2rem;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(100,38,132,0.10);
+      animation: float 3s ease-in-out infinite alternate;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+    section {
+      padding: 5rem 5vw 3rem 5vw;
+      background: var(--gris);
+      position: relative;
+      z-index: 1;
+    }
+    section:nth-child(even) {
+      background: var(--blanco);
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: var(--blanco);
+      border-radius: 20px;
+      box-shadow: var(--sombra);
+      padding: 2rem 1.5rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: opacity, transform;
+    }
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 40px rgba(159,75,151,0.13);
+    }
+    .card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--violeta-claro);
+      animation: iconBounce 1.5s infinite alternate;
+    }
+    @keyframes iconBounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--violeta-oscuro);
+    }
+    .card-desc {
+      font-size: 1rem;
+      color: #4a235a;
+      flex: 1;
+    }
+    .about {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #4a235a;
+      line-height: 1.7;
+      text-align: center;
+      animation: fadeInUp 1.2s;
+    }
+    .features {
+      margin-top: 3rem;
+    }
+    .features-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--violeta-oscuro);
+      margin-bottom: 1.5rem;
+    }
+    .features-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .feature-card {
+      background: linear-gradient(120deg, var(--violeta-oscuro) 60%, var(--violeta-claro) 100%);
+      color: var(--blanco);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      min-width: 240px;
+      max-width: 320px;
+      box-shadow: var(--sombra);
+      margin-bottom: 1rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: opacity, transform;
+    }
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .feature-card:hover {
+      transform: scale(1.04) rotate(-2deg);
+      box-shadow: 0 12px 40px rgba(100,38,132,0.13);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--blanco);
+      animation: iconBounce 1.5s infinite alternate;
+    }
+    .feature-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+      font-size: 1rem;
+      color: #f5e6fa;
+    }
+    .cta-section {
+      background: linear-gradient(90deg, var(--violeta-oscuro), var(--violeta-claro));
+      color: var(--blanco);
+      text-align: center;
+      padding: 4rem 5vw;
+      border-radius: 32px;
+      margin: 4rem 0 2rem 0;
+      box-shadow: 0 8px 32px rgba(159,75,151,0.10);
+      animation: fadeInDown 1.2s;
+    }
+    .cta-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .cta-section .cta-btn {
+      background: var(--blanco);
+      color: var(--violeta-oscuro);
+      font-weight: 700;
+      box-shadow: 0 4px 24px rgba(100,38,132,0.08);
+    }
+    /* NUEVAS SECCIONES Y ANIMACIONES */
+    .how-section, .testimonials-section, .faq-section, .team-section, .contact-section {
+      max-width: 1100px;
+      margin: 0 auto 4rem auto;
+      padding: 3rem 2vw;
+      border-radius: 24px;
+      background: var(--blanco);
+      box-shadow: 0 4px 24px rgba(100,38,132,0.06);
+      opacity: 0;
+      transform: translateY(60px);
+      will-change: opacity, transform;
+    }
+    .how-section.visible, .testimonials-section.visible, .faq-section.visible, .team-section.visible, .contact-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .how-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .how-step {
+      flex: 1 1 220px;
+      min-width: 220px;
+      max-width: 300px;
+      background: var(--gris);
+      border-radius: 16px;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(159,75,151,0.07);
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: opacity, transform;
+    }
+    .how-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .how-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--violeta-claro);
+    }
+    .how-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--violeta-oscuro);
+    }
+    .how-desc {
+      color: #4a235a;
+      font-size: 1rem;
+    }
+    .testimonials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .testimonial {
+      background: var(--gris);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      min-width: 220px;
+      max-width: 340px;
+      box-shadow: 0 2px 12px rgba(159,75,151,0.07);
+      text-align: left;
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: opacity, transform;
+    }
+    .testimonial.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .testimonial-quote {
+      font-style: italic;
+      color: #4a235a;
+      margin-bottom: 1rem;
+    }
+    .testimonial-user {
+      font-weight: 700;
+      color: var(--violeta-oscuro);
+    }
+    .faq-list {
+      margin-top: 2rem;
+    }
+    .faq-item {
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: opacity, transform;
+    }
+    .faq-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .faq-q {
+      font-weight: 700;
+      color: var(--violeta-oscuro);
+      margin-bottom: 0.3rem;
+    }
+    .faq-a {
+      color: #4a235a;
+      font-size: 1rem;
+    }
+    .team-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .team-member {
+      background: var(--gris);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      min-width: 180px;
+      max-width: 220px;
+      box-shadow: 0 2px 12px rgba(159,75,151,0.07);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: opacity, transform;
+    }
+    .team-member.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .team-photo {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 3px solid var(--violeta-claro);
+    }
+    .team-name {
+      font-weight: 700;
+      color: var(--violeta-oscuro);
+      margin-bottom: 0.2rem;
+    }
+    .team-role {
+      color: #4a235a;
+      font-size: 0.95rem;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-width: 400px;
+      margin: 2rem auto 0 auto;
+    }
+    .contact-form input, .contact-form textarea {
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #e0d6ea;
+      font-size: 1rem;
+      font-family: inherit;
+      background: var(--gris);
+      resize: none;
+    }
+    .contact-form button {
+      background: linear-gradient(90deg, var(--violeta-oscuro), var(--violeta-claro));
+      color: var(--blanco);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 32px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-form button:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(159,75,151,0.12);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 0 1rem 0;
+      color: #7d5ca6;
+      font-size: 1rem;
+      background: var(--blanco);
+    }
+    /* Eliminar separadores */
+    .section-divider { display: none !important; }
+    /* Galería de eventos tipo masonry recta, mobile friendly */
+    .events-section {
+      max-width: 1400px;
+      margin: 0 auto 5rem auto;
+      padding: 4.5rem 2vw 3.5rem 2vw;
+      border-radius: 32px;
+      background: var(--blanco);
+      box-shadow: 0 8px 40px rgba(100,38,132,0.10);
+      opacity: 0;
+      transform: translateY(80px) scale(0.98);
+      will-change: opacity, transform;
+    }
+    .events-section.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .events-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.2rem;
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+    .event-card {
+      background: var(--gris);
+      border-radius: 28px;
+      box-shadow: 0 8px 32px rgba(159,75,151,0.13);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      opacity: 0;
+      transform: translateY(120px) scale(0.95);
+      will-change: opacity, transform;
+      transition: box-shadow 0.3s, transform 0.7s cubic-bezier(.4,2,.2,1), opacity 0.7s cubic-bezier(.4,2,.2,1);
+      position: relative;
+      min-width: 320px;
+      max-width: 370px;
+      margin-bottom: 2.5rem;
+      /* Alturas variables para efecto masonry */
+    }
+    .event-card:nth-child(1) { min-height: 520px; }
+    .event-card:nth-child(2) { min-height: 420px; }
+    .event-card:nth-child(3) { min-height: 600px; }
+    .event-card:nth-child(4) { min-height: 480px; }
+    .event-card:nth-child(5) { min-height: 390px; }
+    .event-card.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.7s cubic-bezier(.4,2,.2,1), transform 0.7s cubic-bezier(.4,2,.2,1);
+    }
+    .event-card:hover {
+      box-shadow: 0 16px 64px rgba(159,75,151,0.22);
+      transform: scale(1.06) translateY(-8px);
+      z-index: 2;
+    }
+    .event-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      transition: filter 0.3s, border-radius 0.3s;
+    }
+    .event-card:hover .event-img {
+      filter: brightness(0.80) blur(2.5px) grayscale(0.15);
+      border-radius: 28px 28px 18px 18px;
+    }
+    .event-info {
+      padding: 2.2rem 1.7rem 2.5rem 1.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      font-size: 1.18rem;
+      flex: 1;
+    }
+    .event-title {
+      font-weight: 900;
+      color: var(--violeta-oscuro);
+      font-size: 1.7rem;
+      margin-bottom: 0.2rem;
+    }
+    .event-meta {
+      color: #4a235a;
+      font-size: 1.13rem;
+      margin-bottom: 0.2rem;
+    }
+    .event-stats {
+      color: var(--violeta-claro);
+      font-weight: 800;
+      font-size: 1.18rem;
+    }
+    .event-desc {
+      color: #6d3a7b;
+      font-size: 1.08rem;
+      margin: 0.5rem 0 0.2rem 0;
+    }
+    .event-tags {
+      margin-top: 0.3rem;
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+    .event-tag {
+      background: linear-gradient(90deg, var(--violeta-oscuro), var(--violeta-claro));
+      color: var(--blanco);
+      font-size: 0.98rem;
+      border-radius: 12px;
+      padding: 0.2rem 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      box-shadow: 0 2px 8px rgba(159,75,151,0.10);
+    }
+    .event-more {
+      margin-top: 1.1rem;
+      align-self: flex-end;
+      background: none;
+      border: 2px solid var(--violeta-claro);
+      color: var(--violeta-claro);
+      border-radius: 18px;
+      padding: 0.4rem 1.2rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .event-more:hover {
+      background: var(--violeta-claro);
+      color: var(--blanco);
+    }
+    @media (max-width: 900px) {
+      .events-gallery { gap: 1.2rem; }
+      .event-card { min-width: 90vw; max-width: 98vw; }
+    }
+    @media (max-width: 700px) {
+      .event-img { height: 180px; }
+      .event-card { min-width: 98vw; max-width: 99vw; }
+    }
+    /* Títulos destacados con efectos y colores */
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      font-weight: 900;
+      margin-bottom: 2.5rem;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .section-title .icon {
+      font-size: 2.2rem;
+      margin-right: 1rem;
+      color: var(--violeta-claro);
+      filter: drop-shadow(0 2px 8px #fff8);
+      animation: popIcon 1.2s cubic-bezier(.4,2,.2,1) infinite alternate;
+    }
+    @keyframes popIcon {
+      0% { transform: scale(1) rotate(-8deg); }
+      100% { transform: scale(1.18) rotate(8deg); }
+    }
+    .section-title-bg {
+      background: linear-gradient(90deg, var(--violeta-oscuro) 0%, var(--violeta-claro) 100%);
+      color: var(--blanco);
+      border-radius: 18px;
+      padding: 0.5rem 2.5rem;
+      box-shadow: 0 4px 24px rgba(159,75,151,0.13);
+      display: inline-block;
+      margin: 0 auto;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      animation: fadeInScale 1.2s cubic-bezier(.4,2,.2,1);
+    }
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.7); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .section-title-underline {
+      position: relative;
+      display: inline-block;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--violeta-oscuro);
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      animation: slideInLeft 1.2s cubic-bezier(.4,2,.2,1);
+    }
+    .section-title-underline::after {
+      content: '';
+      display: block;
+      width: 80%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--violeta-claro), var(--violeta-oscuro));
+      border-radius: 4px;
+      margin: 0.3rem auto 0 auto;
+      animation: underlineGrow 1.2s cubic-bezier(.4,2,.2,1);
+    }
+    @keyframes slideInLeft {
+      0% { opacity: 0; transform: translateX(-80px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes underlineGrow {
+      0% { width: 0; }
+      100% { width: 80%; }
+    }
+    /* Efectos de aparición distintos por sección */
+    .features-section .card.visible { animation: fadeInRight 0.7s cubic-bezier(.4,2,.2,1); }
+    @keyframes fadeInRight {
+      0% { opacity: 0; transform: translateX(80px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    .how-section.visible { animation: bounceIn 1.1s cubic-bezier(.4,2,.2,1); }
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.7) translateY(80px); }
+      60% { opacity: 1; transform: scale(1.1) translateY(-10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .about-section.visible { animation: fadeInUpBig 1.1s cubic-bezier(.4,2,.2,1); }
+    @keyframes fadeInUpBig {
+      0% { opacity: 0; transform: translateY(120px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    /* General: más grande */
+    body, section, .about, .features-title, .cta-section, .faq-section, .testimonials-section, .how-section, .contact-section {
+      font-size: 1.18rem;
+    }
+    section, .cta-section, .how-section, .faq-section, .testimonials-section, .contact-section {
+      padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
+    }
+    .features-title, .about h2, .faq-section h2, .testimonials-section h2, .how-section h2, .contact-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 2.2rem;
+      font-weight: 900;
+      color: var(--violeta-oscuro);
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .how-steps, .testimonials, .team-list {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero-img { width: 90vw; }
+      section { padding: 3rem 2vw; }
+      .cta-section { padding: 2rem 2vw; }
+      .how-section, .testimonials-section, .faq-section, .team-section, .contact-section {
+        padding: 2rem 1vw;
+      }
+    }
+    .app-examples-section {
+      max-width: 1400px;
+      margin: 0 auto 5rem auto;
+      padding: 5rem 2vw 4rem 2vw;
+      border-radius: 40px;
+      background: linear-gradient(120deg, #f5e6fa 60%, var(--violeta-claro) 100%);
+      box-shadow: 0 8px 40px rgba(100,38,132,0.13);
+      opacity: 0;
+      transform: translateY(80px) scale(0.98);
+      will-change: opacity, transform;
+      border: 3px solid var(--violeta-claro);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .app-examples-section.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .app-examples-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3.5rem;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 3rem;
+      width: 100%;
+    }
+    .app-example-card {
+      background: var(--blanco);
+      border-radius: 32px;
+      box-shadow: 0 8px 32px rgba(159,75,151,0.13);
+      padding: 2.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 320px;
+      max-width: 420px;
+      min-height: 600px;
+      transition: box-shadow 0.3s, transform 0.5s cubic-bezier(.4,2,.2,1);
+    }
+    .app-example-card:hover {
+      box-shadow: 0 16px 64px rgba(159,75,151,0.22);
+      transform: scale(1.04) translateY(-8px);
+      z-index: 2;
+    }
+    .app-example-img {
+      width: 100%;
+      max-width: 340px;
+      max-height: 600px;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(100,38,132,0.10);
+      object-fit: cover;
+      background: #fff;
+      transition: box-shadow 0.3s, filter 0.3s;
+    }
+    .app-example-card:hover .app-example-img {
+      box-shadow: 0 12px 40px rgba(159,75,151,0.18);
+      filter: brightness(0.95) blur(1px);
+    }
+    @media (max-width: 1100px) {
+      .app-examples-gallery { flex-direction: column; gap: 2rem; align-items: center; }
+      .app-example-card { min-width: 90vw; max-width: 98vw; min-height: 400px; }
+      .app-example-img { max-width: 90vw; max-height: 400px; }
+    }
+    /* Fondos únicos para cada sección */
+    .hero {
+      background: linear-gradient(120deg, var(--blanco) 60%, var(--violeta-claro) 100%);
+      padding-bottom: 6rem;
+    }
+    .events-section {
+      background: linear-gradient(135deg, #fff 60%, #f5e6fa 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .features-section {
+      background: linear-gradient(120deg, #f5e6fa 60%, #fff 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .how-section {
+      background: linear-gradient(135deg, #fff 60%, #e9d6f7 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .about-section {
+      background: linear-gradient(120deg, #f5e6fa 60%, #fff 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .app-examples-section {
+      background: linear-gradient(135deg, #fff 60%, var(--violeta-claro) 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .team-section {
+      background: linear-gradient(120deg, #f5e6fa 60%, var(--violeta-claro) 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .faq-section {
+      background: linear-gradient(135deg, #fff 60%, #e9d6f7 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .testimonials-section {
+      background: linear-gradient(120deg, #f5e6fa 60%, #fff 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .contact-section {
+      background: linear-gradient(135deg, #fff 60%, #e9d6f7 100%);
+      margin-top: 0;
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .cta-section {
+      background: linear-gradient(90deg, var(--violeta-oscuro), var(--violeta-claro));
+      color: var(--blanco);
+      text-align: center;
+      padding: 6rem 5vw;
+      border-radius: 32px;
+      margin: 6rem 0 3rem 0;
+      box-shadow: 0 8px 32px rgba(159,75,151,0.10);
+      animation: fadeInDown 1.2s;
+    }
+    /* Más espacio entre secciones */
+    section, .cta-section, .how-section, .faq-section, .testimonials-section, .contact-section, .about-section, .features-section, .events-section, .app-examples-section, .team-section {
+      margin-bottom: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .features-title, .about h2, .faq-section h2, .testimonials-section h2, .how-section h2, .contact-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 2.2rem;
+      font-weight: 900;
+      color: var(--violeta-oscuro);
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .how-steps, .testimonials, .team-list {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero-img { width: 90vw; }
+      section { padding: 3rem 2vw; }
+      .cta-section { padding: 2rem 2vw; }
+      .how-section, .testimonials-section, .faq-section, .team-section, .contact-section {
+        padding: 2rem 1vw;
+      }
+    }
+    /* NUEVO: Cards grandes y carrusel para '¿Por qué usar Lynk?' */
+    .why-lynk-section {
+      background: linear-gradient(120deg, #4a235a 60%, #9F4B97 100%);
+      color: #fff;
+      border-radius: 32px;
+      box-shadow: 0 8px 40px rgba(100,38,132,0.13);
+      max-width: 1400px;
+      margin: 0 auto 5rem auto;
+      padding: 5rem 2vw 5rem 2vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .why-lynk-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      margin-bottom: 2.5rem;
+      text-align: left;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .why-lynk-carousel {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 2.5rem;
+      position: relative;
+    }
+    .why-lynk-card {
+      background: #5e2d7c;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(100,38,132,0.18);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      min-width: 0;
+      width: 100%;
+      max-width: 520px;
+      min-height: 320px;
+      padding: 2.5rem 2rem;
+      gap: 2rem;
+      opacity: 0;
+      transform: scale(0.95) translateY(40px);
+      transition: opacity 0.5s, transform 0.5s;
+      position: absolute;
+      left: 0; right: 0;
+      margin: auto;
+      z-index: 1;
+    }
+    .why-lynk-card.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      z-index: 2;
+      position: relative;
+    }
+    .why-lynk-card-img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(100,38,132,0.10);
+      flex-shrink: 0;
+    }
+    .why-lynk-card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .why-lynk-card-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.7rem;
+    }
+    .why-lynk-card-desc {
+      font-size: 1.08rem;
+      color: #e0d6ea;
+    }
+    .why-lynk-carousel-controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      justify-content: center;
+    }
+    .why-lynk-carousel-btn {
+      background: #fff;
+      color: #642684;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(100,38,132,0.10);
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-lynk-carousel-btn:hover {
+      background: #9F4B97;
+      color: #fff;
+    }
+    /* NUEVO: Bloques destacados para 'Cómo funciona' y 'Sobre Lynk' */
+    .highlight-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      max-width: 1300px;
+      margin: 0 auto 5rem auto;
+      padding: 5rem 2vw;
+      border-radius: 32px;
+      background: linear-gradient(120deg, #fff 60%, #f5e6fa 100%);
+      box-shadow: 0 8px 40px rgba(100,38,132,0.10);
+    }
+    .highlight-section.reverse {
+      flex-direction: row-reverse;
+      background: linear-gradient(120deg, #f5e6fa 60%, #fff 100%);
+    }
+    .highlight-img {
+      width: 340px;
+      max-width: 40vw;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(100,38,132,0.10);
+      object-fit: cover;
+      background: #fff;
+    }
+    .highlight-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1.2rem;
+    }
+    .highlight-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--violeta-oscuro);
+      margin-bottom: 0.7rem;
+    }
+    .highlight-desc {
+      font-size: 1.18rem;
+      color: #4a235a;
+      line-height: 1.6;
+    }
+    @media (max-width: 1100px) {
+      .why-lynk-carousel { flex-direction: column; gap: 1.2rem; }
+      .why-lynk-card { flex-direction: column; align-items: flex-start; min-width: 0; max-width: 98vw; }
+      .highlight-section, .highlight-section.reverse { flex-direction: column; gap: 2rem; padding: 2.5rem 1vw; }
+      .highlight-img { width: 100%; max-width: 90vw; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-placeholder">L</div>
+    <div class="header-center">
+      <nav>
+        <a href="#features">Características</a>
+        <a href="#how">Cómo funciona</a>
+        <a href="#testimonials">Testimonios</a>
+        <a href="#faq">FAQ</a>
+        <a href="#team">Equipo</a>
+        <a href="#contact">Contacto</a>
+        <a href="#cta">Comenzar</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Lynk: Organiza tus eventos fácil</h1>
+      <p>La forma más simple, clara y eficiente de coordinar reuniones, fiestas, partidos o viajes. ¡Nunca más un plan desorganizado!</p>
+      <button class="cta-btn" onclick="window.location='#cta'">Probar Lynk</button>
+      <img class="hero-img" src="https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=600&q=80" alt="Organización de eventos">
+    </section>
+    <section id="events" class="events-section">
+      <div class="section-title"><span class="section-title-bg">Eventos organizados con Lynk</span></div>
+      <div class="events-gallery">
+        <div class="event-card">
+          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=900&q=80" alt="Concierto de Duki" class="event-img">
+          <div class="event-info">
+            <div class="event-title">Concierto de Duki</div>
+            <div class="event-meta">📍 Movistar Arena, Buenos Aires<br>🗓️ 12/05/2024</div>
+            <div class="event-stats">👥 18.000 asistentes</div>
+            <div class="event-desc">Un show inolvidable con invitados sorpresa y una puesta en escena única. ¡La energía fue increíble!</div>
+            <div class="event-tags"><span class="event-tag">Concierto</span><span class="event-tag">Música</span></div>
+            <button class="event-more">Ver más</button>
+          </div>
+        </div>
+        <div class="event-card">
+          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=900&q=80" alt="Fiesta Universitaria" class="event-img">
+          <div class="event-info">
+            <div class="event-title">Fiesta Universitaria</div>
+            <div class="event-meta">📍 Club Atenas, Córdoba<br>🗓️ 22/03/2024</div>
+            <div class="event-stats">👥 2.300 asistentes</div>
+            <div class="event-desc">La mejor fiesta del año, con DJ en vivo, barra libre y sorteos para todos los estudiantes.</div>
+            <div class="event-tags"><span class="event-tag">Fiesta</span><span class="event-tag">Universidad</span></div>
+            <button class="event-more">Ver más</button>
+          </div>
+        </div>
+        <div class="event-card">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80" alt="Torneo de Fútbol" class="event-img">
+          <div class="event-info">
+            <div class="event-title">Torneo de Fútbol</div>
+            <div class="event-meta">📍 Parque Sarmiento<br>🗓️ 10/04/2024</div>
+            <div class="event-stats">👥 16 equipos, 200 personas</div>
+            <div class="event-desc">Competencia amistosa con premios, food trucks y música en vivo. ¡Gran ambiente familiar!</div>
+            <div class="event-tags"><span class="event-tag">Deporte</span><span class="event-tag">Fútbol</span></div>
+            <button class="event-more">Ver más</button>
+          </div>
+        </div>
+        <div class="event-card">
+          <img src="https://images.unsplash.com/photo-1515169067865-5387a5b7bde7?auto=format&fit=crop&w=900&q=80" alt="Viaje a la Costa" class="event-img">
+          <div class="event-info">
+            <div class="event-title">Viaje a la Costa</div>
+            <div class="event-meta">📍 Mar del Plata<br>🗓️ 15/01/2024</div>
+            <div class="event-stats">👥 18 amigos</div>
+            <div class="event-desc">Un viaje épico con amigos, excursiones, fogatas y muchas anécdotas para recordar.</div>
+            <div class="event-tags"><span class="event-tag">Viaje</span><span class="event-tag">Amigos</span></div>
+            <button class="event-more">Ver más</button>
+          </div>
+        </div>
+        <div class="event-card">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=900&q=80" alt="After Office" class="event-img">
+          <div class="event-info">
+            <div class="event-title">After Office</div>
+            <div class="event-meta">📍 Skybar, Palermo<br>🗓️ 28/06/2024</div>
+            <div class="event-stats">👥 75 asistentes</div>
+            <div class="event-desc">Networking, tragos y buena música para cerrar la semana con colegas y nuevos contactos.</div>
+            <div class="event-tags"><span class="event-tag">After Office</span><span class="event-tag">Networking</span></div>
+            <button class="event-more">Ver más</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="features" class="why-lynk-section">
+      <div class="why-lynk-title">¿Por qué usar Lynk?</div>
+      <div class="why-lynk-carousel">
+        <div class="why-lynk-card active" id="why-card-0">
+          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Organización fácil">
+          <div class="why-lynk-card-content">
+            <div class="why-lynk-card-title">Organización fácil y rápida</div>
+            <div class="why-lynk-card-desc">Crea eventos, invita amigos y asigna tareas en segundos. Todo desde una sola app.</div>
+          </div>
+        </div>
+        <div class="why-lynk-card" id="why-card-1">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Confirmaciones en tiempo real">
+          <div class="why-lynk-card-content">
+            <div class="why-lynk-card-title">Confirmaciones en tiempo real</div>
+            <div class="why-lynk-card-desc">Sigue quién viene, quién trae qué y recibe notificaciones instantáneas de cambios.</div>
+          </div>
+        </div>
+        <div class="why-lynk-card" id="why-card-2">
+          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Colaboración eficiente">
+          <div class="why-lynk-card-content">
+            <div class="why-lynk-card-title">Colaboración eficiente</div>
+            <div class="why-lynk-card-desc">Asigna roles, realiza encuestas rápidas y visualiza el estado de cada participante.</div>
+          </div>
+        </div>
+        <div class="why-lynk-card" id="why-card-3">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="why-lynk-card-img" alt="Historial y estadísticas">
+          <div class="why-lynk-card-content">
+            <div class="why-lynk-card-title">Historial y estadísticas</div>
+            <div class="why-lynk-card-desc">Consulta tu historial de eventos y accede a estadísticas personalizadas.</div>
+          </div>
+        </div>
+      </div>
+      <div class="why-lynk-carousel-controls">
+        <button class="why-lynk-carousel-btn" onclick="showWhyCard(-1)">&lt;</button>
+        <button class="why-lynk-carousel-btn" onclick="showWhyCard(1)">&gt;</button>
+      </div>
+    </section>
+    <section id="how" class="highlight-section">
+      <div class="highlight-content">
+        <div class="highlight-title">¿Cómo funciona Lynk?</div>
+        <div class="highlight-desc">1. Crea tu evento con todos los detalles.<br>2. Invita a tu grupo y asigna tareas.<br>3. Recibe confirmaciones y recordatorios en tiempo real.<br>4. ¡Disfruta el evento organizado y sin estrés!</div>
+      </div>
+      <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=600&q=80" class="highlight-img" alt="Cómo funciona Lynk">
+    </section>
+    <section id="about" class="highlight-section reverse">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" class="highlight-img" alt="Sobre Lynk">
+      <div class="highlight-content">
+        <div class="highlight-title">Sobre Lynk</div>
+        <div class="highlight-desc">Lynk nació como una idea entre amigos, motivados por las dificultades al organizar actividades. Con Lynk, puedes visualizar fácilmente quién viene, qué trae cada uno y a qué hora se sale. Nuestra app permite crear eventos, invitar participantes, asignar tareas y mucho más. Incluye confirmaciones en tiempo real, encuestas, recordatorios y un calendario sincronizado. Lynk es la solución para cualquier grupo que quiera organizarse mejor, de forma simple, clara y efectiva.</div>
+      </div>
+    </section>
+    <section id="app-examples" class="app-examples-section">
+      <div class="section-title"><span class="section-title-bg">Ejemplos de la aplicación</span></div>
+      <div class="app-examples-gallery">
+        <div class="app-example-card">
+          <img src="assets/app-examples/ejemplo-galeria.png" alt="Ejemplo galería de eventos" class="app-example-img">
+        </div>
+        <div class="app-example-card">
+          <img src="assets/app-examples/ejemplo-calendario.png" alt="Ejemplo calendario" class="app-example-img">
+        </div>
+        <div class="app-example-card">
+          <img src="assets/app-examples/ejemplo-inicio.png" alt="Ejemplo pantalla de inicio" class="app-example-img">
+        </div>
+      </div>
+    </section>
+    <section class="features">
+      <div class="features-title">Funciones Premium</div>
+      <div class="features-cards">
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <div class="feature-title">Integración con calendarios externos</div>
+          <div class="feature-desc">Sincroniza tus eventos con Google Calendar, Outlook y más.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <div class="feature-title">Estadísticas avanzadas</div>
+          <div class="feature-desc">Accede a reportes y análisis detallados de tus eventos.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <div class="feature-title">Plantillas de eventos</div>
+          <div class="feature-desc">Crea eventos recurrentes o usa plantillas para ahorrar tiempo.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤩</div>
+          <div class="feature-title">Funciones colaborativas avanzadas</div>
+          <div class="feature-desc">Coordina tareas y roles de manera más eficiente con herramientas premium.</div>
+        </div>
+      </div>
+    </section>
+    <section id="testimonials" class="testimonials-section">
+      <h2 style="text-align:center;color:var(--violeta-oscuro);margin-bottom:1.5rem;">Testimonios</h2>
+      <div class="testimonials">
+        <div class="testimonial"><div class="testimonial-quote">"¡Por fin logramos organizar un viaje sin perder a nadie en el grupo!"</div><div class="testimonial-user">- Sofía, 24 años</div></div>
+        <div class="testimonial"><div class="testimonial-quote">"Las encuestas y recordatorios nos salvaron para la fiesta de fin de año."</div><div class="testimonial-user">- Martín, 29 años</div></div>
+        <div class="testimonial"><div class="testimonial-quote">"Me encanta ver todo el plan en un solo lugar, súper claro y fácil."</div><div class="testimonial-user">- Carla, 32 años</div></div>
+      </div>
+    </section>
+    <section id="faq" class="faq-section">
+      <h2 style="text-align:center;color:var(--violeta-oscuro);margin-bottom:1.5rem;">Preguntas frecuentes</h2>
+      <div class="faq-list">
+        <div class="faq-item"><div class="faq-q">¿Lynk es gratis?</div><div class="faq-a">Sí, puedes usar Lynk gratis con funciones básicas. Hay funciones premium opcionales.</div></div>
+        <div class="faq-item"><div class="faq-q">¿Puedo usar Lynk con cualquier grupo?</div><div class="faq-a">¡Por supuesto! Lynk es ideal para amigos, familia, equipos de trabajo, clubes y más.</div></div>
+        <div class="faq-item"><div class="faq-q">¿Qué métodos de pago aceptan para premium?</div><div class="faq-a">Aceptamos tarjetas de crédito, débito y próximamente billeteras digitales.</div></div>
+      </div>
+    </section>
+    <section id="team" class="team-section">
+      <h2>Nuestro equipo</h2>
+      <div class="team-list">
+        <div class="team-member">
+          <img class="team-photo" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Juan">
+          <div class="team-name">Juan Pérez</div>
+          <div class="team-role">Desarrollador Fullstack</div>
+          <div class="team-bio">Apasionado por la tecnología y el trabajo en equipo. Siempre buscando nuevas soluciones.</div>
+        </div>
+        <div class="team-member">
+          <img class="team-photo" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana">
+          <div class="team-name">Ana Gómez</div>
+          <div class="team-role">Diseño UX/UI</div>
+          <div class="team-bio">Creativa y detallista, enfocada en que cada usuario tenga la mejor experiencia posible.</div>
+        </div>
+        <div class="team-member">
+          <img class="team-photo" src="https://randomuser.me/api/portraits/men/65.jpg" alt="Lucas">
+          <div class="team-name">Lucas Díaz</div>
+          <div class="team-role">Product Manager</div>
+          <div class="team-bio">Organizador nato, conecta ideas y personas para lograr grandes resultados.</div>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="contact-section">
+      <h2 style="text-align:center;color:var(--violeta-oscuro);margin-bottom:1.5rem;">Contacto</h2>
+      <form class="contact-form" onsubmit="event.preventDefault();alert('¡Gracias por tu mensaje!');">
+        <input type="text" placeholder="Nombre" required>
+        <input type="email" placeholder="Email" required>
+        <textarea rows="4" placeholder="Mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+    <section id="cta" class="cta-section">
+      <h2>¿Listo para organizar tu próximo evento?</h2>
+      <p>Empieza a usar Lynk gratis y descubre una nueva forma de coordinar actividades con tus amigos, familia o equipo.</p>
+      <button class="cta-btn">Comenzar ahora</button>
+    </section>
+  </main>
+  <footer>
+    &copy; 2024 Lynk. Todos los derechos reservados.
+  </footer>
+  <script>
+    // Animación de aparición al hacer scroll para cards y secciones
+    function revealOnScroll() {
+      const revealEls = document.querySelectorAll('.card, .feature-card, .how-step, .testimonial, .faq-item, .team-member, .how-section, .testimonials-section, .faq-section, .team-section, .contact-section, .events-section, .event-card, .about-section, .app-examples-section');
+      const windowHeight = window.innerHeight;
+      let delay = 0;
+      revealEls.forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < windowHeight - 80 && !el.classList.contains('visible')) {
+          if (el.classList.contains('event-card') || el.classList.contains('team-member')) {
+            setTimeout(() => el.classList.add('visible'), delay);
+            delay += 180;
+          } else {
+            el.classList.add('visible');
+          }
+        }
+        // Si el elemento sale de la vista por arriba, quitar la clase visible para que la animación se repita
+        if (rect.bottom < 40 || rect.top > windowHeight) {
+          el.classList.remove('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', () => {
+      revealOnScroll();
+      setTimeout(revealOnScroll, 200); // por si hay imágenes
+    });
+
+    // Carrusel para '¿Por qué usar Lynk?'
+    let whyCurrent = 0;
+    const whyCards = document.querySelectorAll('.why-lynk-card');
+    function showWhyCard(dir) {
+      whyCards[whyCurrent].classList.remove('active');
+      whyCurrent = (whyCurrent + dir + whyCards.length) % whyCards.length;
+      whyCards[whyCurrent].classList.add('active');
+    }
+    // Inicializar carrusel
+    whyCards[0].classList.add('active');
+  </script>
+</body>
+</html> 
