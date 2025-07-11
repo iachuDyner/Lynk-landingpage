@@ -1344,7 +1344,8 @@
     }
     .premium-section {
       position: relative;
-      background: #19191b;
+      background: #111 !important;
+      color: #fff !important;
       padding: 7rem 0 8rem 0;
       overflow-x: hidden;
       position: relative;
@@ -1631,21 +1632,21 @@
         <div class="testimonial-chat" data-animate data-side="left">
           <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Juan, 28" /></div>
           <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Pensé que organizar el viaje iba a ser un caos, pero con Lynk fue como tener un grupo de WhatsApp... ¡pero ordenado! Hasta mi amigo Nico llegó a tiempo.”</div>
+            <div class="testimonial-quote-chat">"Pensé que organizar el viaje iba a ser un caos, pero con Lynk fue como tener un grupo de WhatsApp... ¡pero ordenado! Hasta mi amigo Nico llegó a tiempo.</div>
             <div class="testimonial-user-chat">Juan, 28 años</div>
           </div>
         </div>
         <div class="testimonial-chat" data-animate data-side="right">
           <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana, 34" /></div>
           <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Me encantó que pude votar por la fecha y ver todo el plan sin perderme entre mil mensajes. ¡Y los recordatorios me salvaron!”</div>
+            <div class="testimonial-quote-chat">"Me encantó que pude votar por la fecha y ver todo el plan sin perderme entre mil mensajes. ¡Y los recordatorios me salvaron!</div>
             <div class="testimonial-user-chat">Ana, 34 años</div>
           </div>
         </div>
         <div class="testimonial-chat" data-animate data-side="left">
           <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Lucas, 22" /></div>
           <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Al principio dudé, pero ahora uso Lynk para todos los asados. Es mucho más fácil que andar preguntando quién trae qué.”</div>
+            <div class="testimonial-quote-chat">"Al principio dudé, pero ahora uso Lynk para todos los asados. Es mucho más fácil que andar preguntando quién trae qué.</div>
             <div class="testimonial-user-chat">Lucas, 22 años</div>
           </div>
         </div>
@@ -1778,7 +1779,7 @@
         position: relative;
       }
       .testimonial-quote-chat:before {
-        content: '“';
+        content: '"';
         font-size: 2.5rem;
         color: #ffd700;
         position: absolute;
@@ -1787,7 +1788,7 @@
         font-family: serif;
       }
       .testimonial-quote-chat:after {
-        content: '”';
+        content: '"';
         font-size: 2.5rem;
         color: #ffd700;
         position: absolute;
@@ -2091,13 +2092,136 @@
         showNextBubble();
       });
     </script>
-    <section id="how" class="highlight-section">
+    <section id="how" class="highlight-section how-section-embellecida">
       <div class="highlight-content">
-        <div class="highlight-title">¿Cómo funciona Lynk?</div>
-        <div class="highlight-desc">1. Crea tu evento con todos los detalles.<br>2. Invita a tu grupo y asigna tareas.<br>3. Recibe confirmaciones y recordatorios en tiempo real.<br>4. ¡Disfruta el evento organizado y sin estrés!</div>
+        <div class="highlight-title" style="font-size:2.5rem; font-weight:900; color:#642684; margin-bottom:1.5rem; letter-spacing:-1px;">¿Cómo funciona Lynk?</div>
+        <ul class="lynk-steps">
+          <li><span class="lynk-step-icon">📝</span> <span>Crea tu evento con todos los detalles</span></li>
+          <li><span class="lynk-step-icon">👥</span> <span>Invita a tu grupo y asigna tareas</span></li>
+          <li><span class="lynk-step-icon">🔔</span> <span>Recibe confirmaciones y recordatorios en tiempo real</span></li>
+          <li><span class="lynk-step-icon">🎉</span> <span>¡Disfruta el evento organizado y sin estrés!</span></li>
+        </ul>
       </div>
-      <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=600&q=80" class="highlight-img" alt="Cómo funciona Lynk">
+      <div class="lynk-mockup">
+        <div class="lynk-mockup-frame">
+          <img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=600&q=80" class="highlight-img" alt="Cómo funciona Lynk">
+        </div>
+      </div>
     </section>
+    <style>
+    .how-section-embellecida {
+      background: linear-gradient(120deg, #f5e6fa 60%, #fff 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      border-radius: 32px;
+      box-shadow: 0 8px 40px rgba(100,38,132,0.10);
+    }
+    .how-section-embellecida:before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(159,75,151,0.08) 0%, rgba(100,38,132,0.10) 100%);
+      z-index: 0;
+    }
+    .lynk-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+      z-index: 1;
+    }
+    .lynk-step-icon {
+      font-size: 2rem;
+      margin-right: 1rem;
+      vertical-align: middle;
+      background: linear-gradient(90deg, #642684, #9F4B97);
+      color: #fff;
+      border-radius: 50%;
+      padding: 0.5rem 0.7rem;
+      box-shadow: 0 2px 8px #9F4B9722;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .lynk-steps li {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #4a235a;
+      display: flex;
+      align-items: center;
+      background: #fff8;
+      border-radius: 18px;
+      padding: 0.7rem 1.2rem;
+      box-shadow: 0 2px 12px #64268411;
+      transition: box-shadow 0.2s, background 0.2s;
+      animation: fadeInUp 0.7s cubic-bezier(.4,2,.2,1);
+    }
+    .lynk-steps li:hover .lynk-step-icon {
+      transform: scale(1.15) rotate(-8deg);
+    }
+    .lynk-mockup {
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lynk-mockup-frame {
+      background: #fff;
+      border-radius: 32px;
+      box-shadow: 0 8px 32px rgba(100,38,132,0.13);
+      padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+      border: 6px solid #e9d6f7;
+      width: 320px;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .lynk-mockup-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px #64268422;
+    }
+    @media (max-width: 900px) {
+      .how-section-embellecida {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2.5rem 1vw;
+      }
+      .lynk-mockup-frame {
+        width: 90vw;
+        height: 340px;
+        padding: 0.5rem;
+      }
+    }
+    </style>
+    <script>
+      // Animación de aparición simple al hacer scroll para premium
+      (function() {
+        function revealPremiumCards() {
+          const cards = document.querySelectorAll('.premium-feature-card.alot[data-animate]');
+          const windowHeight = window.innerHeight;
+          cards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < windowHeight - 80 && !card.classList.contains('visible')) {
+              card.classList.add('visible');
+            }
+          });
+        }
+        window.addEventListener('scroll', revealPremiumCards);
+        window.addEventListener('resize', revealPremiumCards);
+        document.addEventListener('DOMContentLoaded', revealPremiumCards);
+      })();
+    </script>
     <section id="about" class="highlight-section reverse">
       <img src="https://www.ciudaris.com/wp-content/uploads/amigos-planes-para-semana-santa.jpg" class="highlight-img" alt="Sobre Lynk">
       <div class="highlight-content">
@@ -2131,21 +2255,21 @@
         <div class="testimonial-chat" data-animate data-side="left">
           <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Juan, 28" /></div>
           <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Pensé que organizar el viaje iba a ser un caos, pero con Lynk fue como tener un grupo de WhatsApp... ¡pero ordenado! Hasta mi amigo Nico llegó a tiempo.”</div>
+            <div class="testimonial-quote-chat">"Pensé que organizar el viaje iba a ser un caos, pero con Lynk fue como tener un grupo de WhatsApp... ¡pero ordenado! Hasta mi amigo Nico llegó a tiempo.</div>
             <div class="testimonial-user-chat">Juan, 28 años</div>
           </div>
         </div>
         <div class="testimonial-chat" data-animate data-side="right">
           <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana, 34" /></div>
           <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Me encantó que pude votar por la fecha y ver todo el plan sin perderme entre mil mensajes. ¡Y los recordatorios me salvaron!”</div>
+            <div class="testimonial-quote-chat">"Me encantó que pude votar por la fecha y ver todo el plan sin perderme entre mil mensajes. ¡Y los recordatorios me salvaron!</div>
             <div class="testimonial-user-chat">Ana, 34 años</div>
           </div>
         </div>
         <div class="testimonial-chat" data-animate data-side="left">
           <div class="testimonial-avatar-chat"><img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Lucas, 22" /></div>
           <div class="testimonial-bubble-chat">
-            <div class="testimonial-quote-chat">“Al principio dudé, pero ahora uso Lynk para todos los asados. Es mucho más fácil que andar preguntando quién trae qué.”</div>
+            <div class="testimonial-quote-chat">"Al principio dudé, pero ahora uso Lynk para todos los asados. Es mucho más fácil que andar preguntando quién trae qué.</div>
             <div class="testimonial-user-chat">Lucas, 22 años</div>
           </div>
         </div>
@@ -2179,7 +2303,8 @@
     </section>
     <style>
       .premium-section {
-        background: #19191b;
+        background: #111 !important;
+        color: #fff !important;
         padding: 7rem 0 8rem 0;
         overflow-x: hidden;
         position: relative;
@@ -2428,7 +2553,7 @@
         position: relative;
       }
       .testimonial-quote-chat:before {
-        content: '“';
+        content: '"';
         font-size: 2.5rem;
         color: #ffd700;
         position: absolute;
@@ -2437,7 +2562,7 @@
         font-family: serif;
       }
       .testimonial-quote-chat:after {
-        content: '”';
+        content: '"';
         font-size: 2.5rem;
         color: #ffd700;
         position: absolute;
