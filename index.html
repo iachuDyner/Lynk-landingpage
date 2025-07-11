@@ -98,9 +98,13 @@
       justify-content: center;
       min-height: 70vh;
       text-align: center;
-      background: linear-gradient(120deg, var(--blanco) 60%, var(--violeta-claro) 100%);
+      background-image: url('assets/img/eventos.jfif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       position: relative;
       overflow: hidden;
+      padding-bottom: 6rem;
     }
     .hero h1 {
       font-size: 3rem;
@@ -560,7 +564,6 @@
       transition: filter 0.3s, border-radius 0.3s;
     }
     .event-card:hover .event-img {
-      filter: brightness(0.80) blur(2.5px) grayscale(0.15);
       border-radius: 28px 28px 18px 18px;
     }
     .event-info {
@@ -777,10 +780,10 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-70%, -50%);
+      transform: translate(-75%, -50%);
       width: 1100px;
       max-width: 98vw;
-      height: 700px;
+      height: 500px;
       pointer-events: none;
       display: block !important;
       opacity: 1 !important;
@@ -790,9 +793,9 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 600px;
-      height: 900px;
-      border-radius: 40px;
+      width: 560px;
+      height: 880px;
+      border-radius: 24px;
       box-shadow: none;
       background: transparent !important;
       display: flex;
@@ -806,19 +809,19 @@
       pointer-events: none;
     }
     .app-example-card:nth-child(1) {
-      transform: translate(-480px, -50%) rotate(-24deg) scale(0.98);
+      transform: translate(-350px, -50%) scale(0.98);
     }
     .app-example-card:nth-child(2) {
-      transform: translate(-240px, -50%) rotate(-12deg) scale(0.99);
+      transform: translate(-175px, -50%) scale(0.99);
     }
     .app-example-card:nth-child(3) {
-      transform: translate(0, -50%) rotate(0deg) scale(1);
+      transform: translate(0, -50%) scale(1);
     }
     .app-example-card:nth-child(4) {
-      transform: translate(240px, -50%) rotate(12deg) scale(0.99);
+      transform: translate(175px, -50%) scale(0.99);
     }
     .app-example-card:nth-child(5) {
-      transform: translate(480px, -50%) rotate(24deg) scale(0.98);
+      transform: translate(350px, -50%) scale(0.98);
     }
     .app-example-img {
       width: 100%;
@@ -836,15 +839,15 @@
         min-height: 0;
       }
       .app-example-card {
-        width: 180px;
-        height: 260px;
-        border-radius: 14px;
+        width: 90px;
+        height: 140px;
+        border-radius: 10px;
       }
-      .app-example-card:nth-child(1) { transform: translate(-140px, -50%) rotate(-24deg) scale(0.98); }
-      .app-example-card:nth-child(2) { transform: translate(-70px, -50%) rotate(-12deg) scale(0.99); }
+      .app-example-card:nth-child(1) { transform: translate(-72px, -50%) rotate(-24deg) scale(0.98); }
+      .app-example-card:nth-child(2) { transform: translate(-36px, -50%) rotate(-12deg) scale(0.99); }
       .app-example-card:nth-child(3) { transform: translate(0, -50%) rotate(0deg) scale(1); }
-      .app-example-card:nth-child(4) { transform: translate(70px, -50%) rotate(12deg) scale(0.99); }
-      .app-example-card:nth-child(5) { transform: translate(140px, -50%) rotate(24deg) scale(0.98); }
+      .app-example-card:nth-child(4) { transform: translate(36px, -50%) rotate(12deg) scale(0.99); }
+      .app-example-card:nth-child(5) { transform: translate(72px, -50%) rotate(24deg) scale(0.98); }
       .app-example-img { border-radius: 8px; }
     }
     /* Fondos únicos para cada sección */
@@ -1894,14 +1897,12 @@
     <section class="hero">
       <h1>Lynk: Organiza tus eventos fácil</h1>
       <p>La forma más simple, clara y eficiente de coordinar reuniones, fiestas, partidos o viajes. ¡Nunca más un plan desorganizado!</p>
-      <button class="cta-btn" onclick="window.location='#cta'">Probar Lynk</button>
-      <img class="hero-img" src="https://images.unsplash.com/photo-1515168833906-d2a3b82b3029?auto=format&fit=crop&w=600&q=80" alt="Organización de eventos">
-    </section>
+      <button class="cta-btn" onclick="window.location='#cta'">Probar Lynk</button>    </section>
     <section id="events" class="events-section">
       <div class="section-title"><span class="section-title-bg">Eventos organizados con Lynk</span></div>
       <div class="events-gallery">
         <div class="event-card">
-          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=900&q=80" alt="Concierto de Duki" class="event-img">
+          <img src="assets/img/duko.jpg" alt="Concierto de Duki" class="event-img">
           <div class="event-info">
             <div class="event-title">Concierto de Duki</div>
             <div class="event-meta">📍 Movistar Arena, Buenos Aires<br>🗓️ 12/05/2024</div>
@@ -1912,7 +1913,7 @@
           </div>
         </div>
         <div class="event-card">
-          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=900&q=80" alt="Fiesta Universitaria" class="event-img">
+          <img src="assets/img/fiesta-universitaria.jpg" alt="Fiesta Universitaria" class="event-img">
           <div class="event-info">
             <div class="event-title">Fiesta Universitaria</div>
             <div class="event-meta">📍 Club Atenas, Córdoba<br>🗓️ 22/03/2024</div>
@@ -1923,7 +1924,7 @@
           </div>
         </div>
         <div class="event-card">
-          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80" alt="Torneo de Fútbol" class="event-img">
+          <img src="assets/img/torenofutbol.jpg" alt="Torneo de Fútbol" class="event-img">
           <div class="event-info">
             <div class="event-title">Torneo de Fútbol</div>
             <div class="event-meta">📍 Parque Sarmiento<br>🗓️ 10/04/2024</div>
@@ -1934,7 +1935,7 @@
           </div>
         </div>
         <div class="event-card">
-          <img src="https://images.unsplash.com/photo-1515169067865-5387a5b7bde7?auto=format&fit=crop&w=900&q=80" alt="Viaje a la Costa" class="event-img">
+          <img src="assets/img/costa.jpg" alt="Viaje a la Costa" class="event-img">
           <div class="event-info">
             <div class="event-title">Viaje a la Costa</div>
             <div class="event-meta">📍 Mar del Plata<br>🗓️ 15/01/2024</div>
@@ -1945,7 +1946,7 @@
           </div>
         </div>
         <div class="event-card">
-          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=900&q=80" alt="After Office" class="event-img">
+          <img src="assets/img/After-office.jpg" alt="After Office" class="event-img">
           <div class="event-info">
             <div class="event-title">After Office</div>
             <div class="event-meta">📍 Skybar, Palermo<br>🗓️ 28/06/2024</div>
